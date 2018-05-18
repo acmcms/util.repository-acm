@@ -10,6 +10,8 @@ fi
 . "$APP/source/myx/util.repository-myx/sh-lib/syncing.sh.include"
 
 
-async gitSync "acm/acm.impl-acmbsd/"  "git@github.com:vlapan/acmbsd.git"
+async gitSync "acm/util.repository-acm/"    "git@github.com:acmcms/util.repository-acm.git"
+
+async gitSync "acm/acm.impl-acmbsd/"        "git@github.com:vlapan/acmbsd.git"
 
 wait
