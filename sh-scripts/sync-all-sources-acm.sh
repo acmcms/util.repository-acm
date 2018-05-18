@@ -14,4 +14,7 @@ async gitSync "acm/util.repository-acm/"    "git@github.com:acmcms/util.reposito
 
 async gitSync "acm/acm.impl-acmbsd/"        "git@github.com:vlapan/acmbsd.git"
 
+INF="$APP/source/acm/util.repository-acm/data/repository/repository.inf"
+( set -e ; echo "# copied from $INF at `date`" ; cat "$INF" ) > "$APP/source/acm/repository.inf"
+
 wait
