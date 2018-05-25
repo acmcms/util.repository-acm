@@ -11,7 +11,7 @@ fi
 . "`myx.common which lib/gitCloneSync`"
 
 async(){
-	Async -2 GitCloneSync "$@"
+	Async -2 GitCloneSync "$MMDAPP/source/$@"
 }
 
 async "acm/util.repository-acm/"    "git@github.com:acmcms/util.repository-acm.git"
