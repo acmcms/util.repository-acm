@@ -37,9 +37,9 @@ done
 ###########################################################
 echo "Installing ACM repository into: $TGT_APP_PATH"
 
-export APP="$TGT_APP_PATH"
+export MMDAPP="$TGT_APP_PATH"
 
-myx.common lib/gitCloneSync "$APP/source/acm/util.repository-acm" "git@github.com:acmcms/util.repository-acm.git"
+myx.common lib/gitCloneSync "$MMDAPP/source/acm/util.repository-acm" "git@github.com:acmcms/util.repository-acm.git"
 
 ############
 echo "Done."
