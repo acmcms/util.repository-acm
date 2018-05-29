@@ -14,6 +14,8 @@ async(){
 	Async -2 GitCloneSync "$MMDAPP/source/$@"
 }
 
+async "acm/acm-install-freebsd/"    "git@github.com:acmcms/acm-install-freebsd.git"
+
 async "acm/util.repository-acm/"    "git@github.com:acmcms/util.repository-acm.git"
 
 async "acm/acm.impl-acmbsd/"        "git@github.com:vlapan/acmbsd.git"
