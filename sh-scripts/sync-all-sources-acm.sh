@@ -16,9 +16,21 @@ async(){
 
 async "acm/acm-install-freebsd/"    "git@github.com:acmcms/acm-install-freebsd.git"
 
+async "acm/acm-devel-tools/"	    "git@github.com:acmcms/acm-devel-tools.git"
+
 async "acm/util.repository-acm/"    "git@github.com:acmcms/util.repository-acm.git"
 
 async "acm/acm.impl-acmbsd/"        "git@github.com:vlapan/acmbsd.git"
+
+wait
+
+async "acm/acm-boot-2002-stage1/"	"git@github.com:acmcms/acm-boot-2002-stage1.git"
+async "acm/acm-boot-2002-stage2/"	"git@github.com:acmcms/acm-boot-2002-stage2.git"
+
+async "acm/acm-skin-ctrl-ie6/"	    "git@github.com:acmcms/acm-skin-ctrl-ie6.git"
+async "acm/acm-skin-ctrl-simple/"	"git@github.com:acmcms/acm-skin-ctrl-simple.git"
+async "acm/acm-skin-ctrl-temp/"		"git@github.com:acmcms/acm-skin-ctrl-temp.git"
+async "acm/acm-skin-ctrl-temp-ie6/"	"git@github.com:acmcms/acm-skin-ctrl-temp-ie6.git"
 
 wait
 
