@@ -16,7 +16,7 @@ MakeProjectAcmDomain(){
 }
 
 for PKG in $( ListChangedSourceProjects ) ; do
-	if test ! -z "`ListProjectProvides "$PKG" "build-prepare" | grep -e "^acm-domain$"`" ; then
+	if [ ! -z "$( ListProjectProvides "$PKG" "source-process" | grep -e "^acm-domain$" )" ] ; then
 		Async "`basename "$PKG"`" MakeProjectAcmDomain "$PKG"
 		wait
 	fi
