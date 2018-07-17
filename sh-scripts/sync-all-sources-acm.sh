@@ -47,6 +47,9 @@ async "acm/acm-skin-ctrl-ie6/"	    "git@github.com:acmcms/acm-skin-ctrl-ie6.git"
 async "acm/acm-skin-ctrl-simple/"	"git@github.com:acmcms/acm-skin-ctrl-simple.git"
 async "acm/acm-skin-ctrl-temp/"		"git@github.com:acmcms/acm-skin-ctrl-temp.git"
 async "acm/acm-skin-ctrl-temp-ie6/"	"git@github.com:acmcms/acm-skin-ctrl-temp-ie6.git"
+
+wait
+
 async "acm/acm-srv-acmcms/"			"git@github.com:acmcms/acm-srv-acmcms.git"
 async "acm/acm-srv-download/"		"git@github.com:acmcms/acm-srv-download.git"
 async "acm/acm-srv-proxy/"			"git@github.com:acmcms/acm-srv-proxy.git"
