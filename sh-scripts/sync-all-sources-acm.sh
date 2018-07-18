@@ -12,6 +12,7 @@ fi
 
 async(){
 	Async -2 GitCloneSync "$MMDAPP/source/$@"
+	# Async -3 myx.common lib/gitCloneSync "$MMDAPP/source/$@"
 }
 
 async "acm/acm-install-freebsd/"    "git@github.com:acmcms/acm-install-freebsd.git"
