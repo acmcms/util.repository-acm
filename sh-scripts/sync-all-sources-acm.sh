@@ -15,7 +15,7 @@ async(){
 }
 
 async "acm/acm-install-freebsd/"    "git@github.com:acmcms/acm-install-freebsd.git"
-async "acm/acm.impl-acmbsd/"        "git@github.com:vlapan/acmbsd.git"
+# async "acm/acm.impl-acmbsd/"        "git@github.com:vlapan/acmbsd.git"
 
 async "acm/acm-devel-tools/"	    "git@github.com:acmcms/acm-devel-tools.git"
 async "acm/util.repository-acm/"    "git@github.com:acmcms/util.repository-acm.git"
