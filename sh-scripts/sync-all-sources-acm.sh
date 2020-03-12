@@ -8,7 +8,7 @@ if [ -z "$MMDAPP" ] ; then
 fi
 
 . "`myx.common which lib/async`"
-. "`myx.common which lib/gitCloneSync`"
+. "`myx.common which git/cloneSync`"
 
 async(){
 	Async -2 GitCloneSync "$MMDAPP/source/$@"
