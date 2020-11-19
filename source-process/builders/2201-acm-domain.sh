@@ -16,7 +16,7 @@ MakeProjectAcmDomain(){
 }
 
 for projectName in $( ListChangedSourceProjects ) ; do
-	if [ ! -z "$( ListProjectProvides "$projectName" --filter "source-process" | grep -e "^acm-domain$" )" ] ; then
+	if [ ! -z "$( ListProjectProvides "$projectName" --print-provides-only --filter-and-cut "source-process" | grep -e "^acm-domain$" )" ] ; then
 		Async "`basename "$projectName"`" MakeProjectAcmDomain "$projectName"
 		wait
 	fi
