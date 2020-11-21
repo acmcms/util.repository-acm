@@ -1,6 +1,3 @@
-Require ListChangedSourceProjects
-Require ListProjectProvides
-
 MDSC_SOURCE="${MDSC_SOURCE:-$MMDAPP/cache/sources}"
 
 MakeProjectAcmDomain(){
@@ -15,9 +12,8 @@ MakeProjectAcmDomain(){
 	rsync -a -i --delete "$CHECK_DIR/" "$BUILT_DIR"
 }
 
-for projectName in $( ListChangedSourceProjects ) ; do
-	if [ ! -z "$( ListProjectProvides "$projectName" --print-provides-only --filter-and-cut "source-process" | grep -e "^acm-domain$" )" ] ; then
-		Async "`basename "$projectName"`" MakeProjectAcmDomain "$projectName"
-		wait
-	fi
+Require ListDistroProvides
+ListDistroProvides --select-changed --filter-and-cut "source-process" | grep -e " acm-domain$" | cut -d" " -f1 | sort | uniq | while read -r projectName ; do
+	Async "`basename "$projectName"`" MakeProjectAcmDomain "$projectName"
+	wait
 done
