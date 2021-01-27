@@ -9,7 +9,7 @@ MakeProjectAcmDomain(){
 	local CHECK_DIR="$MDSC_SOURCE/$projectName/protected"
 	local BUILT_DIR="$MMDAPP/output/distro/$projectName/protected"
 	mkdir -p "$BUILT_DIR"
-	rsync -a -i --delete "$CHECK_DIR/" "$BUILT_DIR"
+	rsync -a -i --delete "$CHECK_DIR/" "$BUILT_DIR" 2>&1 | grep -v --fixed-strings --line-buffered '>f..t....... ' >&2
 }
 
 Require ListDistroProvides
