@@ -20,7 +20,7 @@ MakeDistroAcmDomains(){
 	local projectName
 	Require ListDistroProvides
 	ListDistroProvides --select-changed --filter-and-cut "source-process" | grep -e " acm-domain$" | cut -d" " -f1 \
-	| sort | uniq \
+	| sort -u \
 	| while read -r projectName ; do
 		Async "$( basename "$projectName" )" MakeProjectAcmDomain "$projectName"
 		wait
