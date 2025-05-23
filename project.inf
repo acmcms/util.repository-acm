@@ -2,3 +2,4 @@ Type: ae3.Package
 Name: util.repository-acm
 Info: Repository actions package (with repository installer)
 Provides: acm/actions:actions 
+Declares: distro-repository-sync:sh-scripts/sync-all-sources-acm.sh
