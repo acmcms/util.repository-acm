@@ -1,5 +1,12 @@
 Type: ae3.Package
 Name: util.repository-acm
 Info: Repository actions package (with repository installer)
-Provides: acm/actions:actions 
-Declares: distro-repository-sync:sh-scripts/sync-all-sources-acm.sh
+Provides: \
+	acm/util.repository-acm \
+	acm/actions:actions \
+
+Declares: \
+	image-distro-sync:source-prepare:pull:repo:acm/util.repository-acm:git@github.com:acmcms/util.repository-acm.git \
+	image-distro-sync:source-prepare:exec:.:sh-scripts/sync-all-sources-acm.sh \
+	distro-repository-sync:sh-scripts/sync-all-sources-acm.sh \
+
