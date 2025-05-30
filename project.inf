@@ -6,7 +6,7 @@ Provides: \
 	acm/actions:actions \
 
 Declares: \
-	distro-image-sync:source-prepare:pull:repo:acm/util.repository-acm:git@github.com:acmcms/util.repository-acm.git \
-	distro-image-sync:source-prepare:pull:exec:.:sh-scripts/sync-all-sources-acm.sh \
+	distro-image-sync:source-prepare-pull:repo:acm/util.repository-acm:git@github.com:acmcms/util.repository-acm.git \
+	distro-image-sync:source-prepare-pull:exec:.:sh-scripts/sync-all-sources-acm.sh \
 	distro-repository-sync:sh-scripts/sync-all-sources-acm.sh \
 
