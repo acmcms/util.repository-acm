@@ -1,0 +1,29 @@
+acm/acm-install-freebsd/    git@github.com:acmcms/acm-install-freebsd.git
+# acm/acm.impl-acmbsd/        git@github.com:vlapan/acmbsd.git
+
+acm/acm-devel-tools/	    git@github.com:acmcms/acm-devel-tools.git
+acm/util.repository-acm/    git@github.com:acmcms/util.repository-acm.git
+
+acm/acm-base-api/			git@github.com:acmcms/acm-base-api.git
+acm/acm-base-sdk/			git@github.com:acmcms/acm-base-sdk.git
+
+acm/acm-boot-2002-stage1/	git@github.com:acmcms/acm-boot-2002-stage1.git
+acm/acm-boot-2002-stage2/	git@github.com:acmcms/acm-boot-2002-stage2.git
+
+acm/acm-plug-email/		    git@github.com:acmcms/acm-plug-email.git
+acm/acm-plug-messaging/		git@github.com:acmcms/acm-plug-messaging.git
+acm/acm-plug-webdav/		git@github.com:acmcms/acm-plug-webdav.git
+
+acm/acm-plug-launcher/	    git@github.com:acmcms/acm-plug-launcher.git
+acm/acm-plug-s2/			git@github.com:acmcms/acm-plug-s2.git
+acm/acm-plug-s3/			git@github.com:acmcms/acm-plug-s3.git
+acm/acm-plug-u1/			git@github.com:acmcms/acm-plug-u1.git
+
+acm/acm-skin-ctrl-ie6/	    git@github.com:acmcms/acm-skin-ctrl-ie6.git
+acm/acm-skin-ctrl-simple/	git@github.com:acmcms/acm-skin-ctrl-simple.git
+acm/acm-skin-ctrl-temp/		git@github.com:acmcms/acm-skin-ctrl-temp.git
+acm/acm-skin-ctrl-temp-ie6/	git@github.com:acmcms/acm-skin-ctrl-temp-ie6.git
+
+acm/acm-srv-acmcms/			git@github.com:acmcms/acm-srv-acmcms.git
+acm/acm-srv-download/		git@github.com:acmcms/acm-srv-download.git
+acm/acm-srv-proxy/			git@github.com:acmcms/acm-srv-proxy.git

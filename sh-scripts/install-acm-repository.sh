@@ -36,5 +36,8 @@ export MMDAPP="$TGT_APP_PATH"
 
 myx.common git/cloneSync "$MMDAPP/source/acm/util.repository-acm" "git@github.com:acmcms/util.repository-acm.git"
 
+INF="$MMDAPP/source/acm/util.repository-acm/sh-data/repository/repository.inf"
+( set -e ; echo "# copied from $INF at `date`" ; cat "$INF" ) > "$MMDAPP/source/acm/repository.inf"
+
 ############
 echo "Done."

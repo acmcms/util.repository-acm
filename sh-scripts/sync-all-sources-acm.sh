@@ -58,5 +58,5 @@ async "acm/acm-srv-proxy/"			"git@github.com:acmcms/acm-srv-proxy.git"
 
 wait
 
-INF="$MMDAPP/source/acm/util.repository-acm/data/repository/repository.inf"
+INF="$MMDAPP/source/acm/util.repository-acm/sh-data/repository/repository.inf"
 ( set -e ; echo "# copied from $INF at `date`" ; cat "$INF" ) > "$MMDAPP/source/acm/repository.inf"
