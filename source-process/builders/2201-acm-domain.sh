@@ -1,6 +1,6 @@
 MakeProjectAcmDomain(){
-	local MDSC_SOURCE="${MDSC_SOURCE:-$MMDAPP/cached/sources}"
-	local MDSC_OUTPUT="${MDSC_OUTPUT:-$MMDAPP/output/distro}"
+	local MDSC_SOURCE="${MDSC_SOURCE:-$MMDAPP/source}"
+	local MDSC_OUTPUT="${MDSC_OUTPUT:-$MMDAPP/output}"
 	
 	local projectName="$1"
 	if [ -z "$projectName" ] ; then
@@ -10,7 +10,7 @@ MakeProjectAcmDomain(){
 	[ -z "$MDSC_DETAIL" ] || echo "MakeProjectAcmDomain: project: $projectName, source: $MDSC_SOURCE, output: $MDSC_OUTPUT" >&2
 	
 	local CHECK_DIR="$MDSC_SOURCE/$projectName/protected"
-	local BUILT_DIR="$MDSC_OUTPUT/$projectName/protected"
+	local BUILT_DIR="$MDSC_OUTPUT/distro/$projectName/protected"
 	mkdir -p "$BUILT_DIR"
 	rsync -ai --delete "$CHECK_DIR/" "$BUILT_DIR" 2>&1 \
 	| (grep -v --line-buffered -E '>f\.\.t\.+ ' >&2 || true)
