@@ -1,3 +1,11 @@
+#!/bin/sh
+# ^^^ for syntax highlight
+
+[ full != "$MDSC_DETAIL" ] || set -x
+
+type Prefix >/dev/null 2>&1 || . "$( myx.common which lib/prefix )"
+type Parallel >/dev/null 2>&1 || . "$( myx.common which lib/parallel )"
+
 MakeProjectAcmDomain(){
 	local MDSC_SOURCE="${MDSC_SOURCE:-$MMDAPP/source}"
 	local MDSC_OUTPUT="${MDSC_OUTPUT:-$MMDAPP/output}"
@@ -16,15 +24,6 @@ MakeProjectAcmDomain(){
 	| (grep -v --line-buffered -E '>f\.\.t\.+ ' >&2 || true)
 }
 
-MakeDistroAcmDomains(){
-	local projectName
-	Distro ListDistroProvides --select-changed --filter-and-cut "source-process" | grep -e " acm-domain$" \
-	| cut -d" " -f1 \
-	| sort -u \
-	| while read -r projectName ; do
-		Async "$( basename "$projectName" )" MakeProjectAcmDomain "$projectName"
-		wait
-	done
-}
-
-MakeDistroAcmDomains "$@"
+Distro ListDistroProvides --select-changed --filter-and-cut "source-process" | grep -e " acm-domain$" \
+| cut -d" " -f1 \
+| Parallel -v Prefix -2 MakeProjectAcmDomain # "$projectName" 
