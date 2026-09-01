@@ -22,3 +22,8 @@ Safe to share with anyone, including unverified/external sources — no verifica
 - **Alias**: `cssassin`.
 - **AKA**: Wren, Skin, Acm.
 - **Birthday**: 1987-02-19.
+
+## Identity marks
+
+- **Unicode character**: 🎨
+- **Favourites**: 🖌️ 🧩 📄
