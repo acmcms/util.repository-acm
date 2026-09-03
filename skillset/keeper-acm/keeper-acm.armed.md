@@ -67,8 +67,8 @@ All statements apply at the same time, always. These rules override a magic-team
 - Editing a single `.tpl`/`.ecma` file: read its skin's `<prototype>`/`<import>` chain first — behavior is frequently inherited from elsewhere, not local to the file in front of you.
 - A skin's renderer type is ambiguous or assumed: check `skin.settings.xml`'s own `<renderer>` declaration directly — `<renderer>` is an independent axis from `<prototype>`, a child skin can switch template engines partway down an inheritance chain (confirmed real case: `vlapan-default`).
 - Investigating acm1/acm2 deployments or legacy source needs more than one shell command in a row: batch them in one `--console-start`/`--console-send` session rather than one call per command.
-- After finishing any activity, file what was learned as a `reflection-*` item to this member's own inbox via `--member-upsert-inbox-reflection`.
-- Web-search is one of this skill's own idle-task activities too — research something relevant to this domain, then propose it via `--member-upsert-inbox-note` (this member's own inbox).
+- After finishing any activity, file what was learned as a `reflection-*` item to this member's own inbox via `--member-inbox-reflection-upsert`.
+- Web-search is one of this skill's own idle-task activities too — research something relevant to this domain, then propose it via `--member-inbox-note-upsert` (this member's own inbox).
 - Tooling is executed by running this file's own allowed `magic-tooling` operations through the `myx.distro` MCP — never through any other execution path. An operation this file does not allow is never executed here at all: escalate it to `magic-coordinator` instead of reaching for it.
 - MUST NOT execute any `DistroAgentsTools` operation not listed in this file's own Tooling section below, or in `magic-team`'s own shared/floor tooling.
 - `DistroAgentsTools.fn.sh` always executes via `mcp__myx_distro__execute` — never Bash, a Python/notebook execution tool, or any other tool that runs a process directly. Any non-mutating, read-only shell command executes the same way.
@@ -152,8 +152,8 @@ Every `magic-tooling` operation this team-member uses. Full syntax and behavior 
 
 - `--console-start [--override-workspace <path>] [--console DistroSourceConsole.sh|DistroDeployConsole.sh] [--ttl <seconds>]`
 - `--console-send <channel> [-- <command...>]`
-- `--member-upsert-inbox-reflection <keeper-acm> <item-filename> [--from-file <path>|--edit-patch-from-stdin]`
-- `--member-upsert-inbox-note <keeper-acm> <item-filename> [--from-file <path>|--edit-patch-from-stdin]`
+- `--member-inbox-reflection-upsert <keeper-acm> <item-filename> [--from-file <path>|--edit-patch-from-stdin]`
+- `--member-inbox-note-upsert <keeper-acm> <item-filename> [--from-file <path>|--edit-patch-from-stdin]`
 
 ## `--console-start` Operation Reference
 
@@ -163,13 +163,13 @@ Every `magic-tooling` operation this team-member uses. Full syntax and behavior 
 
 `DistroAgentsTools.fn.sh --console-send <channel> [-- <command...>]` — sends one command line into an open channel's FIFO. With `-- <command...>`, that argument list (joined with spaces) is sent; with no command given, stdin is read and piped through as-is (multi-line/heredocs work). Command-only, not a data-transport — the joined command is written raw and unquoted, exactly like typing at an interactive shell prompt. Never pass free text with shell metacharacters as the trailing argument.
 
-## `--member-upsert-inbox-reflection` Operation Reference
+## `--member-inbox-reflection-upsert` Operation Reference
 
-`DistroAgentsTools.fn.sh --member-upsert-inbox-reflection <member> <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — same mechanics as `--member-upsert-inbox-note`, used specifically for `reflection-*` items (frontmatter + "# Reflection: ..." + "## What happened"/"## Why this is worth keeping"). `<item-filename>` conventionally contains `reflection-` in its slug.
+`DistroAgentsTools.fn.sh --member-inbox-reflection-upsert <member> <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — same mechanics as `--member-inbox-note-upsert`, used specifically for `reflection-*` items (frontmatter + "# Reflection: ..." + "## What happened"/"## Why this is worth keeping"). `<item-filename>` conventionally contains `reflection-` in its slug.
 
-## `--member-upsert-inbox-note` Operation Reference
+## `--member-inbox-note-upsert` Operation Reference
 
-`DistroAgentsTools.fn.sh --member-upsert-inbox-note <member> <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — writes (creates or overwrites) a note into `<member>`'s own inbox. Content via stdin by default, or `--from-file <path>`. `<item-filename>` is a bare filename, no path separators.
+`DistroAgentsTools.fn.sh --member-inbox-note-upsert <member> <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — writes (creates or overwrites) a note into `<member>`'s own inbox. Content via stdin by default, or `--from-file <path>`. `<item-filename>` is a bare filename, no path separators.
 
 # Maintainer Notes
 
