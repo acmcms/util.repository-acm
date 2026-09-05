@@ -141,7 +141,7 @@ Before editing any single `.tpl` file, read its skin's `<prototype>`/`<import>` 
 
 ## Idle-Tasks
 
-Scheduling policy for this member's idle-run routines: which routine may fire during duty time when no active board item is assigned to run, its relative selection `weight`, its `min-interval` (wall-clock "not more frequent than" cap, measured from that routine's last `processed/` run), and the `scope` it runs against. The `## daily-idle-task` procedure selects from this list — weighted-random among eligible entries — never from a directory listing; a routine not listed here is not idle-run. Weights and min-intervals were ratified as-is by the human-owner (2026-09); the chosen defaults reflect that (the source idle tasks stated a "one per day, cumulative" cadence but no explicit weights).
+Scheduling policy for this member's idle-run routines: which routine may fire during duty time when no active board item is assigned to run, its relative selection `weight`, its `min-interval` (wall-clock "not more frequent than" cap, measured from that routine's last `processed/` run), and the `scope` it runs against. The `## daily-idle-task` procedure selects from this list — weighted-random among eligible entries — never from a directory listing; a routine not listed here is not idle-run.
 
 - `keeper-acm.file-comment-gap.routine` — weight: 1, min-interval: 24h, scope: `acm-*` legacy tree (Java classes and `.tpl` templates) at `/Volumes/workspace/myx`
 - `keeper-acm.readme-gap.routine` — weight: 1, min-interval: 24h, scope: `acm-*` tree directories and AE3 skin packages they depend on
