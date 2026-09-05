@@ -46,12 +46,9 @@ Named procedure blocks. Steps below call them by name. Not separate routines - n
 ## `daily-idle-task` - pick and run one idle activity, log the outcome
 
 Steps:
-1. Pick one at random:
-   - `idle-tasks/file-comment-gap.idle.md`
-   - `idle-tasks/readme-gap.idle.md`
-   - `idle-tasks/skill-reference-gap.idle.md`
-2. Run only that candidate's own instructions.
-3. Log the activity and its outcome as a new dated file under `processed/` — `processed/<board-item-type>-<date>-<short-topic>.md`, a real board-item type, never an invented word.
+1. Read this file's own `## Idle-Tasks` section (below) and select one eligible idle-run routine from it: weighted-random by each entry's `weight`, considering only entries whose `min-interval` has elapsed since that routine's last `processed/` run and whose `scope` fits the current duty context. The universal research-own-duties activity is always one more eligible candidate beyond the listed routines.
+2. Run that routine's own procedure — its `keeper-acm.<name>.routine.md` file — following its Steps and Closure steps.
+3. Logging the activity and its outcome as a new dated file under `processed/` — `processed/<board-item-type>-<date>-<short-topic>.md`, a real board-item type, never an invented word — is the selected routine's own Closure step.
 
 # Team-Member's (-specific) local rules
 
@@ -142,6 +139,15 @@ Before editing any single `.tpl` file, read its skin's `<prototype>`/`<import>` 
 
 **EGit Team-provider connection recovery**: an `acm-*` project with a valid `.git` directory but no Team-provider link — no Share/Disconnect in the Team menu, no `[repo branch]` decoration — is a stuck EGit auto-share state, not a broken checkout; EGit's auto-share-on-import never re-fires for an already-imported project. Confirmed across all 47 real-git projects in `/Volumes/workspace/myx`, `acm-*` and `ae3.*`/`ae3-*` alike. Full root cause and the real, verified fix — packaging EGit's own `ConnectProviderOperation` as a minimal OSGi bundle, registered for one headless run via `bundles.info` — recorded jointly with `keeper-ae3` in `/Volumes/workspace/myx/MAGIC.md`'s Eclipse workspace metadata section.
 
+## Idle-Tasks
+
+Scheduling policy for this member's idle-run routines: which routine may fire during duty time when no active board item is assigned to run, its relative selection `weight`, its `min-interval` (wall-clock "not more frequent than" cap, measured from that routine's last `processed/` run), and the `scope` it runs against. The `## daily-idle-task` procedure selects from this list — weighted-random among eligible entries — never from a directory listing; a routine not listed here is not idle-run. Weights and min-intervals were ratified as-is by the human-owner (2026-09); the chosen defaults reflect that (the source idle tasks stated a "one per day, cumulative" cadence but no explicit weights).
+
+- `keeper-acm.file-comment-gap.routine` — weight: 1, min-interval: 24h, scope: `acm-*` legacy tree (Java classes and `.tpl` templates) at `/Volumes/workspace/myx`
+- `keeper-acm.readme-gap.routine` — weight: 1, min-interval: 24h, scope: `acm-*` tree directories and AE3 skin packages they depend on
+- `keeper-acm.skill-reference-gap.routine` — weight: 1, min-interval: 24h, scope: template-language / `skin.settings.xml` / skin-lineage constructs hit while reading, recorded in this file's own reference sections
+- universal research-own-duties activity (web-search per `magic-team/magic-team.armed.md`'s "Duties: three kinds, plus reflection") — weight: 1, min-interval: 24h, scope: this member's own ACM.CMS/skin-templating domain — the always-available "one more candidate," not a `.routine.md` file
+
 # Team-Member's (-specific) tooling
 
 Every `magic-tooling` operation this team-member uses. Full syntax and behavior here. Steps use its name only.
@@ -192,7 +198,7 @@ Used to check this file's own definitions against its own goals when it is updat
 
 ### Reference
 
-- `idle-tasks/file-comment-gap.idle.md`, `idle-tasks/readme-gap.idle.md`, `idle-tasks/skill-reference-gap.idle.md` — the three daily-idle activity candidates.
+- `keeper-acm.file-comment-gap.routine`, `keeper-acm.readme-gap.routine`, `keeper-acm.skill-reference-gap.routine` — the three idle-run routine candidates; their scheduling policy is this file's own `## Idle-Tasks` section.
 - `keeper-ae3` — the AE3-repo boundary this skill respects from the other side.
 - `magic-team.authority.keeper.contract.md` — the shared "keepers relay, don't decide independently" policy.
 
