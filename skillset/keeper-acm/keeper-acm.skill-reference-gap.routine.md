@@ -3,9 +3,7 @@ executors: keeper-acm
 maintainers: magic-coordinator, magic-librarian, magic-architect
 invitees: none
 ---
-# routine-skill-reference-gap — the actual procedure
-
-Normative contract: `magic-team/magic-team.shared.md`'s "Armed & Routine contracts" → Routine. This file is a derived skeleton; where the two disagree, `magic-team/magic-team.shared.md` wins.
+# keeper-acm.skill-reference-gap.routine — the actual procedure
 
 # Summary
 
@@ -13,7 +11,7 @@ Normative contract: `magic-team/magic-team.shared.md`'s "Armed & Routine contrac
 
 ## Goals
 
-- While reading, when a template-language construct, a `skin.settings.xml` field, or a skin lineage is hit that is not yet captured in this skill's own reference sections (the template-language tag list, the `skin.settings.xml` field list, or "Known skin lineages"), add a short, grounded entry for it there instead of just leaving a note. The `ACM.ECMA` renderer and its `<%CODE: 'ACM.ECMA' %>` tag (seen in `acm-com.vlapan/vlapan-richedit/skin.settings.xml`) is an example of exactly this gap shape.
+- While reading, when a template-language construct, a `skin.settings.xml` field, or a skin lineage is hit that is not yet captured in this skill's own reference sections (the template-language tag list, the `skin.settings.xml` field list, or "Known skin lineages"), add a short, grounded entry for it there instead of just leaving a note. The `ACM.ECMA` renderer and its `<%CODE: 'ACM.ECMA' %>` tag (in `acm-com.vlapan/vlapan-richedit/skin.settings.xml`) is an example of exactly this gap shape.
 
 ## Scope
 
@@ -88,7 +86,6 @@ Used to check this file's own definitions against its own goals when it is updat
 
 - `keeper-acm.armed.md`'s `## Idle-Tasks` section — the scheduling policy governing when this routine fires.
 - `keeper-acm.armed.md`'s "Domain knowledge: ACM.TPL / ACM.ECMA / skin.settings.xml" — the reference sections this routine adds to.
-- Migrated to routine form in the 2026-09 idle-task-to-routine refactor.
 
 ### Conventions
 

@@ -3,9 +3,7 @@ executors: keeper-acm
 maintainers: magic-coordinator, magic-librarian, magic-architect
 invitees: none
 ---
-# routine-readme-gap — the actual procedure
-
-Normative contract: `magic-team/magic-team.shared.md`'s "Armed & Routine contracts" → Routine. This file is a derived skeleton; where the two disagree, `magic-team/magic-team.shared.md` wins.
+# keeper-acm.readme-gap.routine — the actual procedure
 
 # Summary
 
@@ -89,7 +87,6 @@ Used to check this file's own definitions against its own goals when it is updat
 
 - `keeper-acm.armed.md`'s `## Idle-Tasks` section — the scheduling policy governing when this routine fires.
 - `keeper-acm.file-comment-gap.routine` — the sibling routine whose "read and actually understood" standard this one reuses.
-- Migrated to routine form in the 2026-09 idle-task-to-routine refactor.
 
 ### Conventions
 

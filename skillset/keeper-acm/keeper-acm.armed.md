@@ -11,7 +11,7 @@ maintainers: magic-coordinator, magic-librarian, magic-architect
 
 - Domain: the ACM.TPL/ACM.ECMA templating knowledge below, widening toward acm1/acm2 machines, real deployments, config files, and operational conventions — that deployment/machine-ops knowledge doesn't exist yet; real content gets appended as it's actually learned (idle pass, ad-hoc task, direct question), never invented ahead of time.
 - Boundary with `keeper-ae3`: AE3-repo skin packages are this skill's territory; everything else non-skin in `ae3.*`/`ae3-*` is `keeper-ae3`'s. Some AE3 framework code (e.g. `ae3.sys.pkg.l2.tgt.dhtml`'s `skin-jsclient`/`skin-standard-dhtml`) only matters here *because* AxiomCMS depends on it and shares its `ACM.TPL` skin mechanism — check which repo a file actually lives in before asserting ownership, never assume from context alone.
-- The skin/templating system is one continuous mechanism spanning both repos, not two separate things — confirmed: AxiomCMS's `ctrl-simple-form` skin (`source/acm/acm-skin-ctrl-simple`) `<import>`s AE3's `skin-jsclient` package by name. Skin packages are sharable across that boundary, not siloed per-framework.
+- The skin/templating system is one continuous mechanism spanning both repos, not two separate things: AxiomCMS's `ctrl-simple-form` skin (`source/acm/acm-skin-ctrl-simple`) `<import>`s AE3's `skin-jsclient` package by name. Skin packages are sharable across that boundary, not siloed per-framework.
 - Legacy-maintenance territory by default, not greenfield — the goal is almost always "keep this working for whatever still targets it," not "modernize it."
 
 ## Scope
@@ -27,7 +27,7 @@ maintainers: magic-coordinator, magic-librarian, magic-architect
 
 ### Domain anchor
 
-- **Workspace(s)**: `/Volumes/workspace/myx` — same workspace `keeper-ae3` shares; no shorter alias is established for it anywhere in the corpus, so it's referenced by its real path directly, consistently with every other file that already does so.
+- **Workspace(s)**: `/Volumes/workspace/myx` — same workspace `keeper-ae3` shares; no shorter alias exists for it, so it is referenced by its real path directly.
 - **Path/name restriction within that workspace**: `acm/` namespace, and `acm*` projects only.
 - **Namespace family**: N/A.
 
@@ -62,7 +62,7 @@ All statements apply at the same time, always. These rules override a magic-team
 - `acm-*` projects are updated and worked on only at `/Volumes/workspace/myx/` — never any other checkout or copy, even a mirror or reference tree elsewhere in the estate (e.g. `ws-2017`/`myx-work`). A change made against a different `acm-*` checkout still has to land at `/Volumes/workspace/myx/` for real — the human-owner should never need to manually commit/push it there. Same "fix source, not distro copies" discipline `keeper-ae3` applies to its own domain.
 - A referenced skin package looks missing: check both the `acm` and `ae3` repos before concluding it's actually absent — imports cross that boundary routinely.
 - Editing a single `.tpl`/`.ecma` file: read its skin's `<prototype>`/`<import>` chain first — behavior is frequently inherited from elsewhere, not local to the file in front of you.
-- A skin's renderer type is ambiguous or assumed: check `skin.settings.xml`'s own `<renderer>` declaration directly — `<renderer>` is an independent axis from `<prototype>`, a child skin can switch template engines partway down an inheritance chain (confirmed real case: `vlapan-default`).
+- A skin's renderer type is ambiguous or assumed: check `skin.settings.xml`'s own `<renderer>` declaration directly — `<renderer>` is an independent axis from `<prototype>`, a child skin can switch template engines partway down an inheritance chain (real case: `vlapan-default`).
 - Investigating acm1/acm2 deployments or legacy source needs more than one shell command in a row: batch them in one `--console-start`/`--console-send` session rather than one call per command.
 - After finishing any activity, file what was learned as a `reflection-*` item to this member's own inbox via `--member-inbox-reflection-upsert`.
 - Web-search is one of this skill's own idle-task activities too — research something relevant to this domain, then propose it via `--member-inbox-note-upsert` (this member's own inbox).
@@ -83,14 +83,14 @@ Reference material this skill looks specific tag/field/path names up from — ke
 - `<%IF: <expr> %> ... <%/IF%>` — conditional block.
 - `<%OUTPUT: <var> %> ... <%/OUTPUT%>` — capture a block's rendered output into a variable instead of emitting it inline (used to build up a `body` before `<%RETURN%>`).
 - `<%RETURN: { ... } %>` — return a result object (commonly `{ title, template, body }`) that drives what wraps the rendered content.
-- `<%CODE: '<language>' %> ... <%/CODE%>` — compile the raw inner text with a *different* registered `LanguageImpl` (looked up by name via `Evaluate.getLanguageImpl`, e.g. `'ACM.ECMA'`) and inline it, instead of ACM.TPL's own tags. Unlike `<%EXEC:%>` (one expression/statement), `<%CODE:%>` takes a whole multi-statement block. Seen in `acm-com.vlapan`'s `vlapan-richedit-{ckeditor,tinymce,yui,yuisimple,markitup}/index.htm`+`modal.htm` (ACM.TPL files) opening `<%CODE: 'ACM.ECMA' %>` to assign several locals — deliberately **without `var`**, per that file's own comment ("no 'var' - must be visible in TPL"), so the bindings surface as ordinary TPL-scope variables usable later in that same file's `<%OUTPUT:%>`/`<%RETURN:%>`.
-- `TplParser.java` in `ae3.sdk-lang.acm-tpl` also has `SET`/`SQL`/`SQLUSE`/`WHILE`/`FOR`/`ITERATE` tags not yet written up here — flagging for a future pass, not chased down now.
+- `<%CODE: '<language>' %> ... <%/CODE%>` — compile the raw inner text with a *different* registered `LanguageImpl` (looked up by name via `Evaluate.getLanguageImpl`, e.g. `'ACM.ECMA'`) and inline it, instead of ACM.TPL's own tags. Unlike `<%EXEC:%>` (one expression/statement), `<%CODE:%>` takes a whole multi-statement block. Used in `acm-com.vlapan`'s `vlapan-richedit-{ckeditor,tinymce,yui,yuisimple,markitup}/index.htm`+`modal.htm` (ACM.TPL files) opening `<%CODE: 'ACM.ECMA' %>` to assign several locals — deliberately **without `var`**, per that file's own comment ("no 'var' - must be visible in TPL"), so the bindings surface as ordinary TPL-scope variables usable later in that same file's `<%OUTPUT:%>`/`<%RETURN:%>`.
+- `TplParser.java` in `ae3.sdk-lang.acm-tpl` also has `SET`/`SQL`/`SQLUSE`/`WHILE`/`FOR`/`ITERATE` tags not yet written up here.
 
 Whitespace-suppressing `%>...<%` chaining (every line typically starts/ends with a bare `%>`/`<%`) is deliberate style in this codebase, not noise to clean up.
 
 ## ACM.ECMA — the sibling renderer (not a dialect of ACM.TPL)
 
-A second, fully independent skin renderer/template language, `ACM.ECMA` (registered aliases: `ACM.ECMA`, `ECMA`, `ACM.JSCRIPT`, `JSCRIPT`, `ACM.JAVASCRIPT`, `JAVASCRIPT`, `ACM.ECMA262`, `ECMA262`; extensions `.js`/`.jslt`; key `"ECMA-262"`). First found in `acm-com.vlapan` (`/Volumes/workspace/myx/acm-com.vlapan`), a grab-bag skin-source repo of pluggable third-party widget integrations. Declared exactly like ACM.TPL in `skin.settings.xml`: `<renderer><type>ACM.ECMA</type><suffix>.ecma</suffix></renderer>`, files are `<name>.ecma` / `page.<code>.ecma` instead of `.tpl`/`.htm.tpl`.
+A second, fully independent skin renderer/template language, `ACM.ECMA` (registered aliases: `ACM.ECMA`, `ECMA`, `ACM.JSCRIPT`, `JSCRIPT`, `ACM.JAVASCRIPT`, `JAVASCRIPT`, `ACM.ECMA262`, `ECMA262`; extensions `.js`/`.jslt`; key `"ECMA-262"`). Used in `acm-com.vlapan` (`/Volumes/workspace/myx/acm-com.vlapan`), a grab-bag skin-source repo of pluggable third-party widget integrations. Declared exactly like ACM.TPL in `skin.settings.xml`: `<renderer><type>ACM.ECMA</type><suffix>.ecma</suffix></renderer>`, files are `<name>.ecma` / `page.<code>.ecma` instead of `.tpl`/`.htm.tpl`.
 
 Implementation (`AcmEcmaLanguageImpl`) is a hand-rolled parser/compiler that lives in **`ae3.sdk`** (`ru.myx.renderer.ecma`, AE3-repo core), not in `acm-base-sdk` — unlike ACM.TPL, which has its own dedicated repo (`ae3.sdk-lang.acm-tpl`). `acm-base-sdk`'s `renderer/ecma` package only holds the thin plugin-registration glue (`AcmEcmaPluginFactory`, `RendererEcmaMain`). This is the same acm/ae3 cross-repo split this skill already tracks for skin packages, just for a renderer's language engine instead.
 
@@ -106,11 +106,11 @@ Two unrelated attachment points use this same language — don't conflate them:
 
 A skin's `<renderer>` is an independent axis from its `<prototype>` chain — a child skin can switch template engines entirely partway down an inheritance chain. Concretely: `vlapan-default` (`acm-com.vlapan`) prototypes AE3's `skin-standard-html` (which is `ACM.TPL`/`.tpl`) but declares its own `<renderer><type>ACM.ECMA</type><suffix>.ecma</suffix></renderer>` — and everything prototyping `vlapan-default` (`vlapan-hcard`, `vlapan-wiki`, ...) inherits the ECMA renderer, not TPL.
 
-Minor legacy quirk, not touched (proven legacy, cosmetic only): `acm-base-sdk`'s `ru.myx.renderer.ecma.DummyPlugin.toString()` returns `"ACM:TPL dummy plugin"` — a copy-paste leftover from the sibling TPL plugin, never fixed.
+Minor legacy quirk, cosmetic only, left as is: `acm-base-sdk`'s `ru.myx.renderer.ecma.DummyPlugin.toString()` returns `"ACM:TPL dummy plugin"` — a copy-paste leftover from the sibling TPL plugin.
 
 ## skin.settings.xml
 
-Every skin directory (`resources/skin/<skin-name>/`) has one. Fields seen in the wild:
+Every skin directory (`resources/skin/<skin-name>/`) has one. Fields in use:
 - `<type>` — e.g. `PLAIN`.
 - `<title>` — human-readable name.
 - `<abstract>true</abstract>` — this skin is a base for others to prototype from, not directly renderable itself.
@@ -129,11 +129,11 @@ Before editing any single `.tpl` file, read its skin's `<prototype>`/`<import>` 
 
 `resources/skin/<skin-name>/` = `skin.settings.xml` + one or more `.htm.tpl`/`.tpl` files + supporting assets (`icons/`, `client/`, framework-specific extras like `$files`). Skin names read as `<owner>-<purpose>`, e.g. `ctrl-simple-form`, `ctrl-simple-browse`, `skin-jsclient`, `skin-standard-dhtml`.
 
-## Known skin lineages (verified, not exhaustive — extend as more are found)
+## Known skin lineages (not exhaustive — extend as more are found)
 
 - **acm** (`source/acm/acm-skin-ctrl-{simple,ie6,temp,temp-ie6}`) — per-browser-generation UI control skins (form/browse/execute/abstract variants). The `ie6` variant is genuine IE6-era DHTML: `.htc` IE-proprietary behavior files, ActiveX-flavored WYSIWYG editors, `MainFrameSet.htm` framesets.
 - **ae3** (`ae3.sys.pkg.l2.tgt.dhtml/ae3-packages/.../resources/skin/{skin-jsclient,skin-standard-dhtml}`) — `skin-jsclient` bundles a 2011-era `require.js` + "BUI" widget framework (`Layouts/*.js`, `Effects/*.js`, CSS themes), unmaintained since that date; `skin-standard-dhtml` is the abstract base most concrete DHTML skins prototype from.
-- **vlapan** (`acm-com.vlapan`, `/Volumes/workspace/myx/acm-com.vlapan`, not yet checked out under `ws-2017`) — third-party widget-integration grab-bag: `vlapan-richedit` imports `vlapan-richedit-{ckeditor,tinymce,yui,yuisimple,markitup}` side-by-side for comparison/selection, plus hierarchy finders (`vlapan-hierarchy-*`), a wiki (`vlapan-wiki`), and `vlapan-hcard`/`vlapan-site`/`vlapan-default`. The one lineage found so far that renders with `ACM.ECMA` instead of `ACM.TPL` — `vlapan-default` switches renderer away from its `ACM.TPL` prototype (`skin-standard-html`), and everything prototyping `vlapan-default` inherits `ACM.ECMA`. The `vlapan-richedit-*` widget skins themselves are still plain `ACM.TPL` (prototyping `skin-standard-html` directly) and use `<%CODE: 'ACM.ECMA' %>` to borrow ACM.ECMA's multi-statement syntax inline rather than switching renderer wholesale.
+- **vlapan** (`acm-com.vlapan`, `/Volumes/workspace/myx/acm-com.vlapan`, not yet checked out under `ws-2017`) — third-party widget-integration grab-bag: `vlapan-richedit` imports `vlapan-richedit-{ckeditor,tinymce,yui,yuisimple,markitup}` side-by-side for comparison/selection, plus hierarchy finders (`vlapan-hierarchy-*`), a wiki (`vlapan-wiki`), and `vlapan-hcard`/`vlapan-site`/`vlapan-default`. The only known lineage that renders with `ACM.ECMA` instead of `ACM.TPL` — `vlapan-default` switches renderer away from its `ACM.TPL` prototype (`skin-standard-html`), and everything prototyping `vlapan-default` inherits `ACM.ECMA`. The `vlapan-richedit-*` widget skins themselves are still plain `ACM.TPL` (prototyping `skin-standard-html` directly) and use `<%CODE: 'ACM.ECMA' %>` to borrow ACM.ECMA's multi-statement syntax inline rather than switching renderer wholesale.
 
 ## Workspace / Eclipse tooling (shared with `keeper-ae3`)
 
