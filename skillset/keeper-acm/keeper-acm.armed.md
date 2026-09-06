@@ -137,7 +137,7 @@ Before editing any single `.tpl` file, read its skin's `<prototype>`/`<import>` 
 
 ## Workspace / Eclipse tooling (shared with `keeper-ae3`)
 
-**EGit Team-provider connection recovery**: an `acm-*` project with a valid `.git` directory but no Team-provider link — no Share/Disconnect in the Team menu, no `[repo branch]` decoration — is a stuck EGit auto-share state, not a broken checkout; EGit's auto-share-on-import never re-fires for an already-imported project. Confirmed across all 47 real-git projects in `/Volumes/workspace/myx`, `acm-*` and `ae3.*`/`ae3-*` alike. Full root cause and the real, verified fix — packaging EGit's own `ConnectProviderOperation` as a minimal OSGi bundle, registered for one headless run via `bundles.info` — recorded jointly with `keeper-ae3` in `/Volumes/workspace/myx/MAGIC.md`'s Eclipse workspace metadata section.
+**EGit Team-provider connection recovery**: an `acm-*` project with a valid `.git` directory but no Team-provider link — no Share/Disconnect in the Team menu, no `[repo branch]` decoration — is a stuck EGit auto-share state, not a broken checkout; EGit's auto-share-on-import never re-fires for an already-imported project. It is not an `acm-*`-specific mechanism — it holds for `acm-*` and `ae3.*`/`ae3-*` projects alike. The fix — packaging EGit's own `ConnectProviderOperation` as a minimal OSGi bundle, registered for one headless run via `bundles.info` — is recorded jointly with `keeper-ae3` in `/Volumes/workspace/myx/MAGIC.md`'s Eclipse workspace metadata section.
 
 ## Idle-Tasks
 
