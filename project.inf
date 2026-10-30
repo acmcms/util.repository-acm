@@ -11,6 +11,8 @@ Declares: \
 	magic-team:team-member:skillset/keeper-acm:* \
 	magic-team:directory:eclipse-acm:ceiling-write:/Volumes/workspace/myx:* \
 	magic-team:permissions:directory:eclipse-acm:allow-write:keeper-acm:acm*/** \
+	magic-team:permissions:directory:eclipse-acm:allow-write:keeper-acm:impl-standard-skinners/** \
+	magic-team:permissions:directory:eclipse-acm:allow-write:keeper-acm:unit-test/** \
 	magic-team:permissions:namespace:acm:allow-write:keeper-acm \
 	--distro-image-sync:source-prepare-pull:exec:.:sh-scripts/sync-all-sources-acm.sh \
 	--distro-repository-sync:sh-scripts/sync-all-sources-acm.sh \
