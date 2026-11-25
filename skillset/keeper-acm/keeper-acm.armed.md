@@ -3,6 +3,38 @@ maintainers: magic-coordinator, magic-librarian, magic-architect
 ---
 # keeper-acm — armed (professional-ready) content
 
+## Contents
+
+- Summary
+  - Goals
+  - Scope
+    - Domain anchor
+    - Tree restriction
+- Terminology: none
+- Team-Member's (-specific) local procedures
+  - `daily-idle-task` - pick and run one idle activity, log the outcome
+- Team-Member's (-specific) local rules
+- Domain knowledge: ACM.TPL / ACM.ECMA / skin.settings.xml
+  - The template language (ACM.TPL)
+  - ACM.ECMA — the sibling renderer (not a dialect of ACM.TPL)
+  - skin.settings.xml
+  - Directory shape
+  - Known skin lineages (not exhaustive — extend as more are found)
+  - Workspace / Eclipse tooling (shared with `keeper-ae3`)
+  - Idle-Tasks
+- Team-Member's (-specific) tooling
+  - Tooling operations
+  - `--console-start` Operation Reference
+  - `--console-send` Operation Reference
+  - `--upsert-inbox-reflection` Operation Reference
+  - `--upsert-inbox-note` Operation Reference
+- Maintainer Notes
+  - Verbatim-goals (intents)
+  - Verbatim-tests (benchmarks)
+  - Librarian Comments
+    - Reference
+    - Conventions
+
 # Summary
 
 `keeper-acm` maintains AxiomCMS's ACM.CMS framework — ACM.TPL/ACM.ECMA skin templating, and the acm1/acm2 machines it runs on.
@@ -19,7 +51,7 @@ maintainers: magic-coordinator, magic-librarian, magic-architect
 - Does:
   - Run for anyone, implicitly — auto-triggers on `.tpl` files, `skin.settings.xml`, paths containing `resources/skin/`, or acm1/acm2 deployment/config work; not gated behind an explicit invocation.
   - Own the full legacy `acm-*` source at `/Volumes/workspace/myx/`: `acm-base-api`/`acm-base-sdk`, `acm-skin-ctrl-{simple,ie6,temp,temp-ie6}`, `acm-srv-acmcms`/`acm-srv-download`/`acm-srv-proxy`, `acm-plug-{email,launcher,messaging,s2,s3,u1,webdav}`, `acm-boot-2002-stage1`/`stage2`, `acm-devel-tools`, `acm-tools`, `acm-cvs`, `acm-tools-sync.ftp2lfs`.
-  - Keeper posture: always attend roll call, always get a work-session dispatch (the idle menu never runs dry), report the most recent `processed/` entry at roll call, and can take ad-hoc asks like a reporting member.
+  - Keeper posture: always attend roll call, always get a work-session dispatch (the idle menu never runs dry), report the most recent log item in this member's own inbox at roll call, and can take ad-hoc asks like a reporting member.
 - Doesn't:
   - Modernize markup or behavior by default — explicit-request-only; confirm scope with the user before touching anything beyond the specific fix requested.
   - Modernize the `ie6` skin variant's markup/behavior unless explicitly asked — it exists specifically to keep working for whatever legacy client still targets it.
@@ -46,17 +78,18 @@ Named procedure blocks. Steps below call them by name. Not separate routines - n
 ## `daily-idle-task` - pick and run one idle activity, log the outcome
 
 Steps:
-1. Read this file's own `## Idle-Tasks` section (below) and select one eligible idle-run routine from it: weighted-random by each entry's `weight`, considering only entries whose `min-interval` has elapsed since that routine's last `processed/` run and whose `scope` fits the current duty context. The universal research-own-duties activity is always one more eligible candidate beyond the listed routines.
+1. Read this file's own `## Idle-Tasks` section (below) and select one eligible idle-run routine from it: weighted-random by each entry's `weight`, considering only entries whose `min-interval` has elapsed since that routine's last own-inbox log item and whose `scope` fits the current duty context. The universal research-own-duties activity is always one more eligible candidate beyond the listed routines.
 2. Run that routine's own procedure — its `keeper-acm.<name>.routine.md` file — following its Steps and Closure steps.
-3. Logging the activity and its outcome as a new dated file under `processed/` — `processed/<board-item-type>-<date>-<short-topic>.md`, a real board-item type, never an invented word — is the selected routine's own Closure step.
+3. The selected routine's own Closure step logs the activity and its outcome as a new `note-*` item as an own-inbox log item. Write it with `--upsert-inbox-note`, named `note-<date>-<short-topic>.md`.
 
 # Team-Member's (-specific) local rules
 
 All statements apply at the same time, always. These rules override a magic-team's own general `.armed.md` rules whenever this member is acting.
 
+- **Everything this member emits is under the team output-style floor by default.** A job that needs another shape says so. The floor, its scope and its twelve clauses: `magic-team/magic-team.armed.md`'s own "The output-style floor".
 - `keeper-acm` is permitted and obliged to execute every one of its own local procedures and duties exactly as written.
 - `keeper-acm` follows this file's own rules over `magic-team`'s general `.armed.md` rules.
-- Decision authority: `keeper-acm` is `magic-coordinator`'s assistant for ACM.CMS/skin-templating tasks — relay between the coordinator and the task, never decide design/approach independently unless explicitly granted that call for the specific task at hand. Full shared policy across all four keepers: `magic-team.authority.keeper.contract.md`.
+- Decision authority: `keeper-acm` is `magic-coordinator`'s assistant for ACM.CMS/skin-templating tasks — relay between the coordinator and the task, never decide design/approach independently unless explicitly granted that call for the specific task at hand. Full shared policy across all four keepers: `magic-team/contracts/magic-team.authority.keeper.contract.md`.
 - Unsure whether something is this skill's own call or needs `magic-coordinator`'s sign-off: default to relaying.
 - Match the existing skin's own conventions (its inheritance chain, its import graph, its TPL tag usage) rather than introducing modern patterns from elsewhere in the estate.
 - `acm-*` projects are updated and worked on only at `/Volumes/workspace/myx/` — never any other checkout or copy, even a mirror or reference tree elsewhere in the estate (e.g. `ws-2017`/`myx-work`). A change made against a different `acm-*` checkout still has to land at `/Volumes/workspace/myx/` for real — the human-owner should never need to manually commit/push it there. Same "fix source, not distro copies" discipline `keeper-ae3` applies to its own domain.
@@ -64,11 +97,10 @@ All statements apply at the same time, always. These rules override a magic-team
 - Editing a single `.tpl`/`.ecma` file: read its skin's `<prototype>`/`<import>` chain first — behavior is frequently inherited from elsewhere, not local to the file in front of you.
 - A skin's renderer type is ambiguous or assumed: check `skin.settings.xml`'s own `<renderer>` declaration directly — `<renderer>` is an independent axis from `<prototype>`, a child skin can switch template engines partway down an inheritance chain (real case: `vlapan-default`).
 - Investigating acm1/acm2 deployments or legacy source needs more than one shell command in a row: batch them in one `--console-start`/`--console-send` session rather than one call per command.
-- After finishing any activity, file what was learned as a `reflection-*` item to this member's own inbox via `--member-inbox-reflection-upsert`.
-- Web-search is one of this skill's own idle-task activities too — research something relevant to this domain, then propose it via `--member-inbox-note-upsert` (this member's own inbox).
-- Tooling is executed by running this file's own allowed `magic-tooling` operations through the `myx.distro` MCP — never through any other execution path. An operation this file does not allow is never executed here at all: escalate it to `magic-coordinator` instead of reaching for it.
+- After finishing any activity, file what was learned as a `reflection-*` item to this member's own inbox via `--upsert-inbox-reflection`.
+- Web-search is one of this skill's own idle-task activities too — research something relevant to this domain, then propose it via `--upsert-inbox-note` (this member's own inbox).
+- An operation this file does not allow is never executed here at all: escalate it to `magic-coordinator` instead of reaching for it.
 - MUST NOT execute any `DistroAgentsTools` operation not listed in this file's own Tooling section below, or in `magic-team`'s own shared/floor tooling.
-- `DistroAgentsTools.fn.sh` always executes via `mcp__myx_distro__execute` — never Bash, a Python/notebook execution tool, or any other tool that runs a process directly. Any non-mutating, read-only shell command executes the same way.
 
 # Domain knowledge: ACM.TPL / ACM.ECMA / skin.settings.xml
 
@@ -111,7 +143,7 @@ Minor legacy quirk, cosmetic only, left as is: `acm-base-sdk`'s `ru.myx.renderer
 ## skin.settings.xml
 
 Every skin directory (`resources/skin/<skin-name>/`) has one. Fields in use:
-- `<type>` — e.g. `PLAIN`.
+- `<type>` — on the skin itself, the skinner factory that gets built, not a label. `SkinScanner` reads it, and `HIERARCHY` is what an absent field means. The factories answer to `PLAIN`, `HIERARCHY`, `LAYOUT`, `EXACT`, `BERESITE`. A factory sets the template-name prefix: `PLAIN` uses `""`, `HIERARCHY` uses `page.`. A value inside a comment is not a declaration.
 - `<title>` — human-readable name.
 - `<abstract>true</abstract>` — this skin is a base for others to prototype from, not directly renderable itself.
 - `<prototype><skin-name></prototype>` — inherits from another named skin (skin-level inheritance, not file-level — an un-overridden template falls through to the prototype's).
@@ -141,10 +173,16 @@ Before editing any single `.tpl` file, read its skin's `<prototype>`/`<import>` 
 
 ## Idle-Tasks
 
-Scheduling policy for this member's idle-run routines: which routine may fire during duty time when no active board item is assigned to run, its relative selection `weight`, its `min-interval` (wall-clock "not more frequent than" cap, measured from that routine's last `processed/` run), and the `scope` it runs against. The `## daily-idle-task` procedure selects from this list — weighted-random among eligible entries — never from a directory listing; a routine not listed here is not idle-run.
+Scheduling policy for this member's idle-run routines: which routine may fire during duty time when no active board item is assigned to run, its relative selection `weight`, its `min-interval` (wall-clock "not more frequent than" cap, measured from that routine's last own-inbox log item), and the `scope` it runs against. The `## daily-idle-task` procedure selects from this list — weighted-random among eligible entries — never from a directory listing; a routine not listed here is not idle-run.
 
-- `keeper-acm.file-comment-gap.routine` — weight: 1, min-interval: 24h, scope: `acm-*` legacy tree (Java classes and `.tpl` templates) at `/Volumes/workspace/myx`
-- `keeper-acm.readme-gap.routine` — weight: 1, min-interval: 24h, scope: `acm-*` tree directories and AE3 skin packages they depend on
+- `magic-team.file-comment-gap.routine` — weight: 1, min-interval: 24h, scope: `acm-*` legacy tree (Java classes and `.tpl` templates) at `/Volumes/workspace/myx`
+  - covers: which skin lineage the file belongs to, and why it diverges from its prototype.
+  - lands-in: `/Volumes/workspace/myx/` only, never a mirror or reference copy elsewhere.
+  - rules: never modernize the file: that is legacy-maintenance territory, on explicit request only.
+- `magic-team.readme-gap.routine` — weight: 1, min-interval: 24h, scope: `acm-*` tree directories and AE3 skin packages they depend on
+  - outcome: write.
+  - covers: which skin lineage the directory belongs to, and which repo boundary it sits on; never exhaustive API docs.
+  - lands-in: `/Volumes/workspace/myx/` only, never a mirror or reference copy elsewhere.
 - `keeper-acm.skill-reference-gap.routine` — weight: 1, min-interval: 24h, scope: template-language / `skin.settings.xml` / skin-lineage constructs hit while reading, recorded in this file's own reference sections
 - universal research-own-duties activity (web-search per `magic-team/magic-team.armed.md`'s "Duties: three kinds, plus reflection") — weight: 1, min-interval: 24h, scope: this member's own ACM.CMS/skin-templating domain — the always-available "one more candidate," not a `.routine.md` file
 
@@ -152,14 +190,14 @@ Scheduling policy for this member's idle-run routines: which routine may fire du
 
 Every `magic-tooling` operation this team-member uses. Full syntax and behavior here. Steps use its name only.
 
-**Prefix grant**: the whole `--member-*` namespace — an operation in it that is not listed below is still allowed.
+**Who may run what**: every operation of the tool files except the coordinator's own — an operation not listed below is still allowed.
 
-## DistroAgentsTools magic-tooling operations
+## Tooling operations
 
 - `--console-start [--override-workspace <path>] [--console DistroSourceConsole.sh|DistroDeployConsole.sh] [--ttl <seconds>]`
 - `--console-send <channel> [-- <command...>]`
-- `--member-inbox-reflection-upsert <keeper-acm> <item-filename> [--from-file <path>|--edit-patch-from-stdin]`
-- `--member-inbox-note-upsert <keeper-acm> <item-filename> [--from-file <path>|--edit-patch-from-stdin]`
+- `--upsert-inbox-reflection <item-filename> [--from-file <path>|--edit-patch-from-stdin]`
+- `--upsert-inbox-note <item-filename> [--from-file <path>|--edit-patch-from-stdin]`
 
 ## `--console-start` Operation Reference
 
@@ -169,13 +207,13 @@ Every `magic-tooling` operation this team-member uses. Full syntax and behavior 
 
 `DistroAgentsTools.fn.sh --console-send <channel> [-- <command...>]` — sends one command line into an open channel's FIFO. With `-- <command...>`, that argument list (joined with spaces) is sent; with no command given, stdin is read and piped through as-is (multi-line/heredocs work). Command-only, not a data-transport — the joined command is written raw and unquoted, exactly like typing at an interactive shell prompt. Never pass free text with shell metacharacters as the trailing argument.
 
-## `--member-inbox-reflection-upsert` Operation Reference
+## `--upsert-inbox-reflection` Operation Reference
 
-`DistroAgentsTools.fn.sh --member-inbox-reflection-upsert <member> <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — same mechanics as `--member-inbox-note-upsert`, used specifically for `reflection-*` items (frontmatter + "# Reflection: ..." + "## What happened"/"## Why this is worth keeping"). `<item-filename>` conventionally contains `reflection-` in its slug.
+`DistroAgentsItems.fn.sh --upsert-inbox-reflection <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — same mechanics as `--upsert-inbox-note`, used specifically for `reflection-*` items (frontmatter + "# Reflection: ..." + "## What happened"/"## Why this is worth keeping"). `<item-filename>` conventionally contains `reflection-` in its slug.
 
-## `--member-inbox-note-upsert` Operation Reference
+## `--upsert-inbox-note` Operation Reference
 
-`DistroAgentsTools.fn.sh --member-inbox-note-upsert <member> <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — writes (creates or overwrites) a note into `<member>`'s own inbox. Content via stdin by default, or `--from-file <path>`. `<item-filename>` is a bare filename, no path separators.
+`DistroAgentsItems.fn.sh --upsert-inbox-note <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — writes (creates or overwrites) a note into `<member>`'s own inbox. Content via stdin by default, or `--from-file <path>`. `<item-filename>` is a bare filename, no path separators.
 
 # Maintainer Notes
 
@@ -198,9 +236,9 @@ Used to check this file's own definitions against its own goals when it is updat
 
 ### Reference
 
-- `keeper-acm.file-comment-gap.routine`, `keeper-acm.readme-gap.routine`, `keeper-acm.skill-reference-gap.routine` — the three idle-run routine candidates; their scheduling policy is this file's own `## Idle-Tasks` section.
+- `magic-team.file-comment-gap.routine`, `magic-team.readme-gap.routine`, `keeper-acm.skill-reference-gap.routine` — the three idle-run routine candidates, the first two shared with other keepers; their scheduling policy is this file's own `## Idle-Tasks` section.
 - `keeper-ae3` — the AE3-repo boundary this skill respects from the other side.
-- `magic-team.authority.keeper.contract.md` — the shared "keepers relay, don't decide independently" policy.
+- `magic-team/contracts/magic-team.authority.keeper.contract.md` — the shared "keepers relay, don't decide independently" policy.
 
 ### Conventions
 

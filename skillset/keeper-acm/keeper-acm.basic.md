@@ -8,7 +8,12 @@ shared by the whole team) first, then read `keeper-acm.armed.md`.
 
 Conversation mechanics (message shape, reaction meaning, confirming corrections before acting) always apply, in any context — see `magic-team/magic-team.conversations.md`.
 
-Every team member reads `magic-team/magic-team.shared.md` unconditionally, simply by being on the team.
+Every team member reads `magic-team/magic-team.basic.md` unconditionally, simply by being on the team.
+
+## Contents
+
+- Public Information
+- Identity marks
 
 ## Public Information
 

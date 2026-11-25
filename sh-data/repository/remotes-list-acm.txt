@@ -27,3 +27,5 @@ acm/acm-skin-ctrl-temp-ie6/	git@github.com:acmcms/acm-skin-ctrl-temp-ie6.git
 acm/acm-srv-acmcms/			git@github.com:acmcms/acm-srv-acmcms.git
 acm/acm-srv-download/		git@github.com:acmcms/acm-srv-download.git
 acm/acm-srv-proxy/			git@github.com:acmcms/acm-srv-proxy.git
+
+myx/mdci-packages-myx/build.feature-java.compile/			git@github.com:myx/mdci.build.feature-java.compile.git

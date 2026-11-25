@@ -1,9 +1,35 @@
 ---
+type: routine
 executors: keeper-acm
 maintainers: magic-coordinator, magic-librarian, magic-architect
 invitees: none
+requires-session-kind: standalone
+input-scan-def: none
+review-by: inherit
 ---
 # keeper-acm.skill-reference-gap.routine — the actual procedure
+
+## Contents
+
+- Summary
+  - Goals
+  - Scope
+- Opening steps
+- Steps
+- Closure steps
+- Routine's local procedures
+- Routine's local rules
+- Routine-specific tooling
+  - Tooling operations
+  - `--console-start` Operation Reference
+  - `--console-send` Operation Reference
+  - `--upsert-inbox-reflection` Operation Reference
+- Maintainer Notes
+  - Verbatim-goals (intents)
+  - Verbatim-tests (benchmarks)
+  - Librarian Comments
+    - Reference
+    - Conventions
 
 # Summary
 
@@ -20,16 +46,20 @@ invitees: none
 - Doesn't:
   - Guess the general shape from a single example — only what has actually been confirmed in the source, said so briefly.
 
+# Opening steps
+
+None of its own: the Opening steps of the routine it inherits from run first (its session kind's, or `magic-team.inline.routine`'s when it runs inline).
+
 # Steps
 
-Exact instructions. Execute in order, every step, literally as written — not less, not more. If a step cannot execute as written: escalate, or fail loud.
+Exact instructions. Execute in order, every step, literally as written — not less, not more. If a step cannot execute as written: escalate it, and never skip it silently.
 
 1. **spot-reference-gap**: While reading, spot a template-language construct, a `skin.settings.xml` field, or a skin lineage not yet captured in this skill's own reference sections (the template-language tag list, the `skin.settings.xml` field list, or "Known skin lineages").
 2. **add-grounded-entry**: Add a short, grounded entry for it in the right reference section — only what has actually been confirmed in the source, and say so briefly. Do not guess the general shape from a single example.
 
 # Closure steps
 
-1. **log-outcome**: Log the addition like any other idle-day entry, as a new dated file under `processed/` — `processed/<board-item-type>-<date>-<short-topic>.md`. Then run this member's own post-activity reflection (`--member-inbox-reflection-upsert`), per `keeper-acm.armed.md`.
+1. **log-outcome**: Log the addition like any other idle-day entry, as a new `note-*` own-inbox log item, through `--upsert-inbox-note`, named `note-<date>-<short-topic>.md`. Then run this member's own post-activity reflection (`--upsert-inbox-reflection`), per `keeper-acm.armed.md`.
 
 # Routine's local procedures
 
@@ -50,11 +80,11 @@ All statements apply at the same time, always. These rules override a participan
 
 Every `magic-tooling` operation this routine uses. Full syntax and behavior here. Steps use its name only.
 
-## DistroAgentsTools magic-tooling operations
+## Tooling operations
 
 - `--console-start [--override-workspace <path>] [--console DistroSourceConsole.sh|DistroDeployConsole.sh] [--ttl <seconds>]` (**spot-reference-gap**: batch the reads)
 - `--console-send <channel> [-- <command...>]` (**spot-reference-gap**)
-- `--member-inbox-reflection-upsert <member> <item-filename> [--from-file <path>|--edit-patch-from-stdin]` (**log-outcome**)
+- `--upsert-inbox-reflection <item-filename> [--from-file <path>|--edit-patch-from-stdin]` (**log-outcome**)
 
 ## `--console-start` Operation Reference
 
@@ -64,9 +94,9 @@ Every `magic-tooling` operation this routine uses. Full syntax and behavior here
 
 `DistroAgentsTools.fn.sh --console-send <channel> [-- <command...>]` — sends one command line into an open channel's FIFO. Command-only, not a data-transport.
 
-## `--member-inbox-reflection-upsert` Operation Reference
+## `--upsert-inbox-reflection` Operation Reference
 
-`DistroAgentsTools.fn.sh --member-inbox-reflection-upsert <member> <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — files a `reflection-*` item into `<member>`'s own inbox.
+`DistroAgentsItems.fn.sh --upsert-inbox-reflection <item-filename> [--from-file <path>|--edit-patch-from-stdin]` — files a `reflection-*` item into `<member>`'s own inbox.
 
 # Maintainer Notes
 
